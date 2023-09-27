@@ -12,6 +12,9 @@ const Feirinha_Routes_1 = __importDefault(require("./routes/Feirinha.Routes"));
 const Recommendation_Routes_1 = __importDefault(require("./routes/Recommendation.Routes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use('/', (res) => res.status(200).json({
+    message: 'Servidor no ar',
+}));
 app.use('/user', User_Routes_1.default);
 app.use('/login', Login_Routes_1.default);
 app.use('/market', Market_Routes_1.default);
