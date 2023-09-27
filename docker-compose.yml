@@ -25,28 +25,28 @@ services:
       # dentro do diretório /app
       - ./:/app
     # Lista de serviços do qual este serviço depende
-    depends_on:
-      # Precisa do mongo funcionando antes de subir o node
-      - mongodb
+    # depends_on:
+    #   # Precisa do mongo funcionando antes de subir o node
+    #   - mongodb
     # Lista de portas mapeadas de dentro para fora do container
     # na notação porta_de_fora:porta_de_dentro
     ports:
       # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
       - 3001:3001
-    environment:
-      - MONGO_URI=mongodb://mongodb:27017/feirinha
+    # environment:
+    #   - MONGO_URI=mongodb://mongodb:27017/feirinha
 
-  # Serviço que irá rodar o mongodb
-  mongodb:
-    image: mongo:5.0.7
-    container_name: feirinha_db
-    volumes:
-      - ./:/app
-    restart: always
-    ports:
-      # Garanta que não haverá conflitos de porta com um mongodb que esteja
-      # rodando localmente
-      - 27017:27017
+  # # Serviço que irá rodar o mongodb
+  # mongodb:
+  #   image: mongo:5.0.7
+  #   container_name: feirinha_db
+  #   volumes:
+  #     - ./:/app
+  #   restart: always
+  #   ports:
+  #     # Garanta que não haverá conflitos de porta com um mongodb que esteja
+  #     # rodando localmente
+  #     - 27017:27017
 
 # Lista de redes que os containeres irão utilizar
 networks:
