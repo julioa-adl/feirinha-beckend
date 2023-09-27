@@ -1,23 +1,26 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -25,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = __importDefault(require("../domains/User"));
 const User_Model_1 = __importDefault(require("../models/User.Model"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcrypt = __importStar(require("bcryptjs"));
 const jwtFunctions_1 = require("../auth/jwtFunctions");
 class UserService {
     constructor() {
@@ -37,41 +40,77 @@ class UserService {
         }
         return null;
     }
-    create(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { name, email, password } = user;
-            const existingUser = yield this.model.findOne({ email: email });
-            if (existingUser)
-                return { type: 409, payload: { token: null } };
-            const saltRounds = 10;
-            const validPwd = yield bcrypt_1.default.hash(password, saltRounds);
-            const newUser = yield this.model.create({ name, email, password: validPwd });
-            const { password: _password } = newUser, userWithoutPassword = __rest(newUser, ["password"]);
-            const token = (0, jwtFunctions_1.createToken)(userWithoutPassword);
+    async getById(id) {
+        const user = await this.model.findById(id);
+        return user;
+    }
+    async getUsers() {
+        const allUsers = await this.model.findAll();
+        if (!allUsers)
+            return { type: 404, payload: { token: null } };
+        const listUsers = allUsers.map((user) => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }));
+        return { type: null, payload: listUsers };
+    }
+    async firstUser() {
+        const superUser = {
+            name: process.env.USER_SUPER_NAME || 'Super',
+            email: process.env.USER_SUPER_EMAIL || 'super@example.com',
+            password: process.env.USER_SUPER_PASS || 'super_pass',
+            birthday: process.env.USER_SUPER_BTHD || '00-00-0000',
+            role: process.env.USER_SUPER_ROLE || 'Super',
+        };
+        const salt = bcrypt.genSaltSync(10);
+        const validPwd = bcrypt.hashSync(superUser.password, salt);
+        const allUsers = await this.model.findAll();
+        if (allUsers.length === 0) {
+            const { name, email, password, birthday, role } = superUser;
+            await this.model.create({ name, email, password: validPwd, birthday, role });
+        }
+    }
+    async create(user) {
+        await this.firstUser();
+        const { name, email, password, birthday, role } = user;
+        const existingUser = await this.model.findOne({ email: email });
+        if (existingUser)
+            return { type: 409, payload: { token: null } };
+        const salt = bcrypt.genSaltSync(10);
+        const validPwd = bcrypt.hashSync(password, salt);
+        const newUser = await this.model.create({ name, email, password: validPwd, birthday, role });
+        newUser.password = '';
+        const token = (0, jwtFunctions_1.createToken)(newUser);
+        return { type: null, payload: { token } };
+    }
+    async login(user) {
+        const { email, password } = user;
+        const existingUser = await this.model.findOne({ email: email });
+        if (!existingUser)
+            return { type: 409, payload: { token: null } };
+        const match = await bcrypt.compare(password, existingUser.password);
+        if (match) {
+            existingUser.password = '';
+            const token = (0, jwtFunctions_1.createToken)(existingUser);
             return { type: null, payload: { token } };
-        });
+        }
+        else {
+            return { type: 404, payload: { token: null } };
+        }
     }
-    login(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { email, password } = user;
-            const existingUser = yield this.model.findOne({ email: email });
-            if (!existingUser)
-                return { type: 409, payload: { token: null } };
-            const match = yield bcrypt_1.default.compare(password, existingUser.password);
-            if (match) {
-                const { password: _password } = existingUser, userWithoutPassword = __rest(existingUser, ["password"]);
-                const token = (0, jwtFunctions_1.createToken)(userWithoutPassword);
-                return { type: null, payload: { token } };
-            }
-            else {
-                return { type: 404, payload: { token: null } };
-            }
-        });
+    async update(id, obj) {
+        const { password } = obj;
+        if (password) {
+            const salt = bcrypt.genSaltSync(10);
+            const validPwd = bcrypt.hashSync(password, salt);
+            obj.password = validPwd;
+        }
+        return await this.model.update(id, obj);
     }
-    delete(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.delete(id);
-        });
+    async deleteUser(id) {
+        return await this.model.delete(id);
     }
 }
 exports.default = UserService;
