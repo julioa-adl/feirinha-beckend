@@ -4,8 +4,13 @@ class Product {
     constructor(product) {
         this.id = product.id;
         this.name = product.name;
+        this.subName = product.subName;
+        this.manufacturer = product.manufacturer;
         this.category = product.category;
         this.code = product.code;
+        this.unitMeasure = product.unitMeasure;
+        this.size = product.size;
+        this.image = product.image;
     }
 }
 exports.default = Product;
