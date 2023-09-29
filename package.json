@@ -14,7 +14,8 @@
     "lint": "eslint . --ext .ts",
     "dev": "ts-node-dev src/server.ts",
     "prestart": "npm run build",
-    "start": "node dist/src/server.js"
+    "start": "node dist/src/server.js",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
