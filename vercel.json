@@ -1,4 +1,15 @@
-
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/src" }]
+  "version": 2,
+  "builds": [
+    {
+      "src": ".dist/src/server.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/src/server.js"
+    }
+  ]
 }
