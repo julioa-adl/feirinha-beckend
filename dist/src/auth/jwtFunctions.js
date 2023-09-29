@@ -5,11 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = exports.createToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-// import fs from 'fs';
-// import path from 'path';
-// const keyPath = path.join(__dirname, '..', '../jwt.evaluation.key');
-// const secret = fs.readFileSync(keyPath, 'utf8');
-const secret = 'secret_key';
+const secret = process.env.SECRET_KEY;
 const jwtConfig = {
     algorithm: 'HS256',
     expiresIn: '7d',

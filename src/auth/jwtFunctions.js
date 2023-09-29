@@ -1,10 +1,6 @@
 import jwt from 'jsonwebtoken';
-// import fs from 'fs';
-// import path from 'path';
 
-// const keyPath = path.join(__dirname, '..', '../jwt.evaluation.key');
-// const secret = fs.readFileSync(keyPath, 'utf8');
-const secret = 'secret_key';
+const secret = process.env.SECRET_KEY
 
 const jwtConfig = {
   algorithm: 'HS256',
