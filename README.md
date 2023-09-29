@@ -35,13 +35,6 @@ Back-end:
     * Para rodar o back-end:
 
       ```
-      desativado
-      <s>cd backend/ && docker-compose up -d --build</s>
-      <s>&& docker exec -it feirinha_api bash</s>
-      ```
-    * Atual:
-
-      ```
         npm run dev
       ```
   </details>
