@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "test": "mocha -r ts-node/register tests/**/**/*.test.js --exit -t 60000",
     "test:unit": "jest tests/unit",
     "test:integration": "jest tests/integration --runInBand ",
