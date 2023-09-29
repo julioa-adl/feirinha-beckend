@@ -9,6 +9,10 @@ class FeirinhaController {
         this.service = new Feirinha_Service_1.default();
         this.create = this.create.bind(this);
         this.getAll = this.getAll.bind(this);
+        this.default = this.default.bind(this);
+    }
+    async default(req, res) {
+        return res.status(200).json({ message: 'servidor no ar' });
     }
     async create(req, res) {
         try {

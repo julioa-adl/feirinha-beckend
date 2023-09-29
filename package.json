@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prebuild": "rm -rf ./dist",
     "build": "tsc",
-    "postbuild": "cp ./src/database/*.sql ./dist/src/database/ && npm run create-views",
     "test": "mocha -r ts-node/register tests/**/**/*.test.js --exit -t 60000",
     "test:unit": "jest tests/unit",
     "test:integration": "jest tests/integration --runInBand ",
