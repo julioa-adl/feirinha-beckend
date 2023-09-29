@@ -16,7 +16,7 @@ Nele é possível:
 > Técnologias usadas
 
 Back-end:
-* Desenvolvido usando: NodeJS, ExpressJS, MongoDB, Mongoose, ES6, TypeScript, JWT, Bcrypt, ˜Docker˜.
+* Desenvolvido usando: NodeJS, ExpressJS, MongoDB, Mongoose, ES6, TypeScript, JWT, Bcrypt, <s>Docker</s>.
 
 
 ## Inicializando o Projeto
@@ -36,8 +36,8 @@ Back-end:
 
       ```
       desativado
-      ˜cd backend/ && docker-compose up -d --build˜
-      ˜&& docker exec -it feirinha_api bash˜
+      <s>cd backend/ && docker-compose up -d --build</s>
+      <s>&& docker exec -it feirinha_api bash</s>
       ```
     * Atual:
 
