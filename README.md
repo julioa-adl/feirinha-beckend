@@ -215,3 +215,6 @@ Back-end:
   ```
     - Apenas Admins e Super podem deletar produtos.
   </details>
+
+
+readme ainda em construção juntamente com os testes unitários ...
