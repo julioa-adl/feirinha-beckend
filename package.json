@@ -11,8 +11,7 @@
     "db:reset": "docker exec feirinha_db mongo --eval feirinha.dropDatabase",
     "lint": "eslint . --ext .ts",
     "dev": "ts-node-dev src/server.ts",
-    "start": "node dist/src/server.js",
-    "vercel-build": "echo hello"
+    "start": "node dist/src/server.js"
   },
   "keywords": [],
   "author": "",
