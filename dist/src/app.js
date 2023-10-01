@@ -11,7 +11,14 @@ const Product_Routes_1 = __importDefault(require("./routes/Product.Routes"));
 const Feirinha_Routes_1 = __importDefault(require("./routes/Feirinha.Routes"));
 const Recommendation_Routes_1 = __importDefault(require("./routes/Recommendation.Routes"));
 const Default_Routes_1 = __importDefault(require("./routes/Default.Routes"));
+const cors_1 = __importDefault(require("cors"));
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true,
+    optionSuccessStatus: 200
+};
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.use('/', Default_Routes_1.default);
 app.use('/user', User_Routes_1.default);
