@@ -3,13 +3,13 @@ import IProduct from '../interfaces/IProduct';
 export default class Product {
   protected id?: string;
   protected name: string;
-  protected subName: string;
+  protected subName?: string;
   protected manufacturer: string;
   protected category: string;
   protected code: string;
-  protected unitMeasure: string;
-  protected size: number;
-  protected image: string;
+  protected unitMeasure?: string;
+  protected size?: number;
+  protected image?: string;
 
   constructor(product: IProduct) {
     this.id = product.id;
