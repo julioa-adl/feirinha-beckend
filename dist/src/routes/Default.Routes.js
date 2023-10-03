@@ -10,5 +10,5 @@ const defaultRouter = (0, express_1.Router)();
 const defaultController = new Feirinha_Controller_1.default();
 defaultRouter
     .get('/', defaultController.default)
-    .post('/relavidate', Token_Middleware_1.default.validateToken);
+    .post('/revalidate', Token_Middleware_1.default.validateToken);
 exports.default = defaultRouter;

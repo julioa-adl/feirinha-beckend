@@ -7,6 +7,6 @@ const defaultController = new FeirinhaController();
 
 defaultRouter
   .get('/', defaultController.default)
-  .post('/relavidate', mdwsToken.validateToken)
+  .post('/revalidate', mdwsToken.validateToken)
 
 export default defaultRouter;
