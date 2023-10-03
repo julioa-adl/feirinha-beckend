@@ -9,7 +9,7 @@ const userController = new UserController();
 userRouter
   .get('/', mdwsUser.validAdmin, userController.getUsers)
   .post('/', mdwsUser.validateRegister, userController.create)
-  .put('/', mdwsToken.validateToken, mdwsUser.validateUser, userController.update)
-  .delete('/', mdwsToken.validateToken, mdwsUser.validateUser,userController.delete);
+  .put('/', mdwsToken.validateUserToken, mdwsUser.validateUser, userController.update)
+  .delete('/', mdwsToken.validateUserToken, mdwsUser.validateUser,userController.delete);
 
 export default userRouter;

@@ -12,6 +12,6 @@ const userController = new User_Controller_1.default();
 userRouter
     .get('/', User_Middleware_1.default.validAdmin, userController.getUsers)
     .post('/', User_Middleware_1.default.validateRegister, userController.create)
-    .put('/', Token_Middleware_1.default.validateToken, User_Middleware_1.default.validateUser, userController.update)
-    .delete('/', Token_Middleware_1.default.validateToken, User_Middleware_1.default.validateUser, userController.delete);
+    .put('/', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.update)
+    .delete('/', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.delete);
 exports.default = userRouter;
