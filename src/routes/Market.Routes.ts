@@ -9,7 +9,7 @@ const marketController = new MarketController();
 marketRouter
   .get('/', marketController.getAll)
   .post('/', mktMiddleware.validCreateMarket, marketController.create)
-  .put('/',mdws.validAdmin, marketController.update)
+  .put('/', marketController.update)
   .delete('/',mdws.validAdmin, marketController.delete);
 
 export default marketRouter;
