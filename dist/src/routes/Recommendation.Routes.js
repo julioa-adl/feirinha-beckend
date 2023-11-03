@@ -5,11 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Recommendation_Controller_1 = __importDefault(require("../controllers/Recommendation.Controller"));
+const Token_Middleware_1 = __importDefault(require("../middlewares/Token.Middleware"));
 const User_Middleware_1 = __importDefault(require("../middlewares/User.Middleware"));
 const recommendationRouter = (0, express_1.Router)();
 const recommendationController = new Recommendation_Controller_1.default();
 recommendationRouter
-    .get('/', recommendationController.getAll)
-    .post('/', recommendationController.create)
-    .delete('/', User_Middleware_1.default.validAdmin, recommendationController.delete);
+    .get('/', Token_Middleware_1.default.validateUserToken, recommendationController.getAll)
+    .post('/', Token_Middleware_1.default.validateUserToken, recommendationController.create)
+    .delete('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, recommendationController.delete);
 exports.default = recommendationRouter;

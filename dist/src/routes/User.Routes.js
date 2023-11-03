@@ -11,7 +11,8 @@ const userRouter = (0, express_1.Router)();
 const userController = new User_Controller_1.default();
 userRouter
     .get('/', User_Middleware_1.default.validAdmin, userController.getUsers)
+    .get('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.getUserById)
     .post('/', User_Middleware_1.default.validateRegister, userController.create)
-    .put('/', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.update)
-    .delete('/', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.delete);
+    .put('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.update)
+    .delete('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, userController.delete);
 exports.default = userRouter;

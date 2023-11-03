@@ -19,7 +19,11 @@ export default class FeirinhaService {
 
   public async getAll() {
     const search = await this.model.findAll();
-    if (!search) return { type: 404, message: 'nenhuma feirinha encontrada' };
-    return { type: null, message: search };
+    if (search) return { type: null, message: search };
+    return { type: 404, message: 'nenhuma feirinha encontrada' };
+  }
+
+  public async delete(id: string) {
+    return await this.model.delete(id)
   }
 }

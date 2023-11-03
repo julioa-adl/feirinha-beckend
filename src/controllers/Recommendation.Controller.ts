@@ -47,7 +47,7 @@ export default class RecommendationController {
           const result = await this.service.delete(id);
           if (result) return res.status(200).json({ 
             message: 
-            `recomendação excluida com sucesso`});
+            'recomendação excluida com sucesso'});
         } catch(err: unknown) {
           return res.status(500).json({
             message: 'erro ao deletar recomendação', error: String(err),

@@ -10,6 +10,7 @@ class FeirinhaController {
         this.create = this.create.bind(this);
         this.getAll = this.getAll.bind(this);
         this.default = this.default.bind(this);
+        this.delete = this.delete.bind(this);
     }
     async default(req, res) {
         return res.status(200).json({ message: 'servidor no ar' });
@@ -41,6 +42,21 @@ class FeirinhaController {
             return res.status(500).json({
                 message: 'erro ao buscar no banco',
                 error: String(err),
+            });
+        }
+    }
+    async delete(req, res) {
+        try {
+            const { id } = req.body;
+            const result = await this.service.delete(id);
+            if (result)
+                return res.status(200).json({
+                    message: 'feirinha excluida com sucesso'
+                });
+        }
+        catch (err) {
+            return res.status(500).json({
+                message: 'erro ao deletar feirinha', error: String(err),
             });
         }
     }

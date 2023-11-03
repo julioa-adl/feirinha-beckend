@@ -26,7 +26,7 @@ class RecommendationService {
         const newRecommendation = await this.model.create({
             userId, productId, rating, comment, date
         });
-        return { type: null, message: `Recommendation successfuly registered` };
+        return { type: null, message: `Recommendation ${newRecommendation.id} successfuly registered` };
     }
     async delete(id) {
         return await this.model.delete(id);

@@ -1,10 +1,11 @@
-import Recommendation from "../domains/Recommendation";
-import IRecommendation from "../interfaces/IRecommendation";
-import RecommendationModel from "../models/Recommendation.Model";
+import Recommendation from '../domains/Recommendation';
+import IRecommendation from '../interfaces/IRecommendation';
+import RecommendationModel from '../models/Recommendation.Model';
 
 export default class RecommendationService {
     public model = new RecommendationModel();
-    public createRecommendationDomain(recommendation: IRecommendation | null): Recommendation | null {
+    public createRecommendationDomain(recommendation: IRecommendation |
+            null): Recommendation | null {
         if (recommendation) {
           return new Recommendation(recommendation);
         }
@@ -25,7 +26,7 @@ export default class RecommendationService {
             userId, productId, rating, comment, date
         });
         return { type: null, message: 
-          `Recommendation successfuly registered`};
+          `Recommendation ${newRecommendation.id} successfuly registered`};
       }
     
       public async delete(id: string) {

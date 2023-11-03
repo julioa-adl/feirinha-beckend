@@ -8,6 +8,7 @@ class UserController {
     constructor() {
         this.service = new User_Service_1.default();
         this.getUsers = this.getUsers.bind(this);
+        this.getUserById = this.getUserById.bind(this);
         this.create = this.create.bind(this);
         this.login = this.login.bind(this);
         this.update = this.update.bind(this);
@@ -25,6 +26,25 @@ class UserController {
             return res.status(500).json({
                 message: 'Erro ao buscar usuário no banco', error: String(err),
             });
+        }
+    }
+    async getUserById(req, res) {
+        const { userId } = req.params;
+        try {
+            const user = await this.service.getById(userId); // Substitua pelo método real de busca no seu banco de dados.
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+            const userWithoutPass = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            };
+            res.status(200).json(userWithoutPass);
+        }
+        catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
         }
     }
     async create(req, res) {
@@ -62,7 +82,8 @@ class UserController {
     }
     async update(req, res) {
         try {
-            const { id, ...obj } = req.body;
+            const id = req.params.userId;
+            const { ...obj } = req.body;
             const findUser = await this.service.getById(id);
             if (!findUser)
                 return;
@@ -81,7 +102,7 @@ class UserController {
     }
     async delete(req, res) {
         try {
-            const { id } = req.body;
+            const id = req.params.userId;
             const findUser = await this.service.getById(id);
             if (!findUser)
                 return res.status(404).json({
