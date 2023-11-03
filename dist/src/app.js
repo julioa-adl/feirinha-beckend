@@ -13,7 +13,7 @@ const Recommendation_Routes_1 = __importDefault(require("./routes/Recommendation
 const Default_Routes_1 = __importDefault(require("./routes/Default.Routes"));
 const cors_1 = __importDefault(require("cors"));
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5174',
     credentials: true,
     optionSuccessStatus: 200
 };
