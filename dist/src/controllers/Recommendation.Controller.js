@@ -46,7 +46,7 @@ class RecommendationController {
             const result = await this.service.delete(id);
             if (result)
                 return res.status(200).json({
-                    message: `recomendação excluida com sucesso`
+                    message: 'recomendação excluida com sucesso'
                 });
         }
         catch (err) {

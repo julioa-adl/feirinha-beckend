@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwtFunctions_1 = require("../auth/jwtFunctions");
 const validateUser = async (req, res, next) => {
-    const { id, role, name } = req.body;
+    const { role, name } = req.body;
+    const paramsId = req.params.userId;
     const verify = await (0, jwtFunctions_1.verifyToken)(req.headers.authorization);
     if (role === 'Super' || name === 'Super') {
         return res.status(400).json({ error: 'Só Existe Um Super, e Ele não compartilha O PODER' });
@@ -10,7 +11,7 @@ const validateUser = async (req, res, next) => {
     if (role && verify.role !== 'Super') {
         return res.status(401).json({ error: 'Apenas o Super pode alterar Role de usuários' });
     }
-    if (verify._id === id || verify.role === 'Admin' || verify.role === 'Super') {
+    if (verify._id === paramsId || verify.role === 'Admin' || verify.role === 'Super') {
         return next();
     }
     return res.status(401).json({ error: 'Permission Danied - No Changes' });

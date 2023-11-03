@@ -23,9 +23,12 @@ class FeirinhaService {
     }
     async getAll() {
         const search = await this.model.findAll();
-        if (!search)
-            return { type: 404, message: 'nenhuma feirinha encontrada' };
-        return { type: null, message: search };
+        if (search)
+            return { type: null, message: search };
+        return { type: 404, message: 'nenhuma feirinha encontrada' };
+    }
+    async delete(id) {
+        return await this.model.delete(id);
     }
 }
 exports.default = FeirinhaService;
