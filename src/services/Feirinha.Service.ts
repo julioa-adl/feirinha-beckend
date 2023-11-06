@@ -17,6 +17,12 @@ export default class FeirinhaService {
     return { type: 500, message: 'Erro ao cadastrar' };
   }
 
+  public async getByUserId(userId: string) {
+    const feirinhas = await this.model.findByUserId(userId);
+    if (feirinhas) return { type: null, message: feirinhas };
+    return { type: 404, message: 'nenhuma feirinha encontrada' };
+  }
+
   public async getAll() {
     const search = await this.model.findAll();
     if (search) return { type: null, message: search };

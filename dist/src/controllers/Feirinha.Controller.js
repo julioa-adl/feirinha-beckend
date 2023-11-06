@@ -9,6 +9,7 @@ class FeirinhaController {
         this.service = new Feirinha_Service_1.default();
         this.create = this.create.bind(this);
         this.getAll = this.getAll.bind(this);
+        this.getByUserId = this.getByUserId.bind(this);
         this.default = this.default.bind(this);
         this.delete = this.delete.bind(this);
     }
@@ -27,6 +28,20 @@ class FeirinhaController {
         catch (err) {
             return res.status(500).json({
                 message: 'erro ao registrar feirinha',
+                error: String(err),
+            });
+        }
+    }
+    async getByUserId(req, res) {
+        const { userId } = req.params;
+        try {
+            const { type, message } = await this.service.getByUserId(userId);
+            if (!type)
+                return res.status(200).json(message);
+        }
+        catch (err) {
+            return res.status(500).json({
+                message: 'erro ao buscar no banco',
                 error: String(err),
             });
         }

@@ -7,7 +7,9 @@ const feirinhaRouter = Router();
 const feirinhaController = new FeirinhaController();
 
 feirinhaRouter
-  .get('/', mdwsToken.validateUserToken, feirinhaController.getAll)
+  .get('/', mdwsUser.validAdmin, feirinhaController.getAll)
+  .get('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser,
+        feirinhaController.getByUserId)
   .post('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser, feirinhaController.create)
   .delete('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser, feirinhaController.delete)
 

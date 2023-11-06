@@ -19,6 +19,9 @@ class AbstractODM {
     async findById(id) {
         return this.model.findById(id);
     }
+    async findByUserId(userId) {
+        return this.model.find().where('userId').equals(userId);
+    }
     async update(id, obj) {
         const result = this.model.findByIdAndUpdate({ _id: id }, { ...obj }, { new: true });
         return result;

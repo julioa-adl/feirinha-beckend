@@ -9,6 +9,7 @@ export default class FeirinhaController {
     this.service = new FeirinhaService();
     this.create = this.create.bind(this);
     this.getAll = this.getAll.bind(this);
+    this.getByUserId = this.getByUserId.bind(this);
     this.default = this.default.bind(this);
     this.delete = this.delete.bind(this);
   }
@@ -28,6 +29,19 @@ export default class FeirinhaController {
     } catch(err: unknown) {
       return res.status(500).json({
         message: 'erro ao registrar feirinha',
+        error: String(err),
+      });
+    }
+  }
+
+  public async getByUserId(req: Request, res: Response) {
+    const { userId } = req.params;
+    try {
+      const { type, message } = await this.service.getByUserId(userId);
+      if (!type) return res.status(200).json( message );
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'erro ao buscar no banco',
         error: String(err),
       });
     }

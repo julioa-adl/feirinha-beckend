@@ -27,6 +27,10 @@ abstract class AbstractODM<T> {
     return this.model.findById(id);
   }
 
+  async findByUserId(userId: string): Promise<T[] | null> {
+    return this.model.find().where('userId').equals(userId);
+  }
+
   async update(id: string, obj: Partial<T>):
   Promise<T | null> {
     const result = this.model.findByIdAndUpdate(

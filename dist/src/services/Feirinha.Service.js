@@ -21,6 +21,12 @@ class FeirinhaService {
             return { type: null, message: 'feirinha salva!' };
         return { type: 500, message: 'Erro ao cadastrar' };
     }
+    async getByUserId(userId) {
+        const feirinhas = await this.model.findByUserId(userId);
+        if (feirinhas)
+            return { type: null, message: feirinhas };
+        return { type: 404, message: 'nenhuma feirinha encontrada' };
+    }
     async getAll() {
         const search = await this.model.findAll();
         if (search)
