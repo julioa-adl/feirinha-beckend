@@ -33,6 +33,12 @@ class FeirinhaService {
             return { type: null, message: search };
         return { type: 404, message: 'nenhuma feirinha encontrada' };
     }
+    async update(id, obj) {
+        const update = await this.model.update(id, obj);
+        if (update)
+            return { type: null, message: 'feirinha atualizada!' };
+        return { type: 500, message: 'Erro ao atualizar' };
+    }
     async delete(id) {
         return await this.model.delete(id);
     }

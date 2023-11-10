@@ -11,6 +11,7 @@ feirinhaRouter
   .get('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser,
         feirinhaController.getByUserId)
   .post('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser, feirinhaController.create)
+  .put('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser, feirinhaController.update)
   .delete('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser, feirinhaController.delete)
 
 export default feirinhaRouter;

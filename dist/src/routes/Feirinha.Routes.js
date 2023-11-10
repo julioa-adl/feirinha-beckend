@@ -13,5 +13,6 @@ feirinhaRouter
     .get('/', User_Middleware_1.default.validAdmin, feirinhaController.getAll)
     .get('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.getByUserId)
     .post('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.create)
+    .put('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.update)
     .delete('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.delete);
 exports.default = feirinhaRouter;
