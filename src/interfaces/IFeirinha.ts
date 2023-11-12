@@ -1,7 +1,9 @@
 export interface IList {
   productId: string,
+  productName: string
   quantity: number,
   price: number,
+  buyed: boolean
 }
 
 export interface IFeirinha {
