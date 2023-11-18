@@ -4,6 +4,7 @@ class Feirinha {
     constructor(feirinha) {
         this.id = feirinha.id;
         this.userId = feirinha.userId;
+        this.availableToSpend = feirinha.availableToSpend;
         this.marketId = feirinha.marketId;
         this.listCart = feirinha.listCart;
         this.date = feirinha.date;

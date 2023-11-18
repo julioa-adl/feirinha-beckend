@@ -35,6 +35,12 @@ export default class FeirinhaService {
     return { type: 500, message: 'Erro ao atualizar' };
   }
 
+  // public async updateListCart(id: string, item) {
+  //   const update = await this.model.update(id, obj)
+  //   if (update) return { type: null, message: 'feirinha atualizada!' };
+  //   return { type: 500, message: 'Erro ao atualizar' };
+  // }
+
   public async delete(id: string) {
     return await this.model.delete(id)
   }

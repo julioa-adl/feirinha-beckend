@@ -8,6 +8,7 @@ export interface IList {
 
 export interface IFeirinha {
   id?: string,
+  availableToSpend: number,
   userId: string,
   marketId: string,
   listCart: IList[],
