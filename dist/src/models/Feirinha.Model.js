@@ -20,6 +20,8 @@ class FeirinhaModel extends AbstractODM_1.default {
 exports.default = FeirinhaModel;
 const IListSchema = new mongoose_1.Schema({
     productId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Product', required: true },
+    productName: { type: String, required: true },
     quantity: { type: String, required: true },
     price: { type: String, required: true },
+    buyed: { type: Boolean, required: true },
 });

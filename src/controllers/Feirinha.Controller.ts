@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable max-lines */
 import { Request, Response } from 'express';
 import { IFeirinha } from '../interfaces/IFeirinha';
 import FeirinhaService from '../services/Feirinha.Service';
@@ -13,6 +15,10 @@ export default class FeirinhaController {
     this.default = this.default.bind(this);
     this.delete = this.delete.bind(this);
     this.update = this.update.bind(this);
+    // CRUD ITENS LISTCART
+    this.addItemToList = this.addItemToList.bind(this);
+    this.removeItemFromList = this.removeItemFromList.bind(this);
+    this.updateItemInList = this.updateItemInList.bind(this);
   }
 
   public async default(req: Request, res: Response) {
@@ -87,5 +93,55 @@ export default class FeirinhaController {
         message: 'erro ao deletar feirinha', error: String(err),
       })
     }
-}
+  }
+
+  // CRUD ITENS LISTCART
+
+  public async addItemToList(req: Request, res: Response) {
+    try {
+      const { feirinhaId, newItem } = req.body;
+      const result = await this.service.addItemToList(feirinhaId, newItem);
+      if (result) {
+        return res.status(200).json({ message: 'Item adicionado à lista!' });
+      }
+      return res.status(500).json({ message: 'Erro ao adicionar item à lista' });
+    } catch (err: unknown) {
+      return res.status(500).json({
+        message: 'Erro ao adicionar item à lista',
+        error: String(err),
+      });
+    }
+  }
+
+  public async removeItemFromList(req: Request, res: Response) {
+    try {
+      const { feirinhaId, itemId } = req.body;
+      const result = await this.service.removeItemFromList(feirinhaId, itemId);
+      if (result) {
+        return res.status(200).json({ message: 'Item removido da lista!' });
+      }
+      return res.status(500).json({ message: 'Erro ao remover item da lista' });
+    } catch (err: unknown) {
+      return res.status(500).json({
+        message: 'Erro ao remover item da lista',
+        error: String(err),
+      });
+    }
+  }
+
+  public async updateItemInList(req: Request, res: Response) {
+    try {
+      const { feirinhaId, itemId, updatedItem } = req.body;
+      const { type, message } = await this.service.updateItemInList(feirinhaId, itemId, updatedItem);
+      if (type) {
+        return res.status(200).json(message);
+      }
+      return res.status(500).json({ message: 'Erro ao atualizar item na lista' });
+    } catch (err: unknown) {
+      return res.status(500).json({
+        message: 'Erro ao atualizar item na lista',
+        error: String(err),
+      });
+    }
+  }
 }

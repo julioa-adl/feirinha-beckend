@@ -26,14 +26,14 @@ class AbstractODM {
         const result = this.model.findByIdAndUpdate({ _id: id }, { ...obj }, { new: true });
         return result;
     }
-    async insertMany(data) {
-        try {
-            const insertedDocuments = await this.model.insertMany(data);
-            return insertedDocuments;
-        }
-        catch (error) {
-            throw new Error(`Erro ao inserir vários documentos: ${error}`);
-        }
+    async addItemToList(feirinhaId, newItem) {
+        return this.model.findByIdAndUpdate(feirinhaId, { $push: { listCart: newItem } }, { new: true });
+    }
+    async removeItemFromList(feirinhaId, itemId) {
+        return this.model.findByIdAndUpdate(feirinhaId, { $pull: { listCart: { _id: itemId } } }, { new: true });
+    }
+    async updateItemInList(feirinhaId, itemId, updatedItem) {
+        return this.model.findByIdAndUpdate(feirinhaId, { $set: { 'listCart.$[item]': updatedItem } }, { new: true, arrayFilters: [{ 'item._id': itemId }] });
     }
     async delete(id) {
         return this.model.findByIdAndDelete(id);

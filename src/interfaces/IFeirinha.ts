@@ -1,4 +1,6 @@
 export interface IList {
+  _id?: string,
+  id?: string,
   productId: string,
   productName: string
   quantity: number,

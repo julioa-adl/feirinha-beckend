@@ -1,4 +1,5 @@
 import { model, Model, models, Schema } from 'mongoose';
+import { IList } from '../interfaces/IFeirinha';
 
 abstract class AbstractODM<T> {
   protected model: Model<T>;
@@ -41,13 +42,29 @@ abstract class AbstractODM<T> {
     return result;
   }
 
-  public async insertMany(data: T[]): Promise<T[]> {
-    try {
-      const insertedDocuments = await this.model.insertMany(data);
-      return insertedDocuments;
-    } catch (error) {
-      throw new Error(`Erro ao inserir vários documentos: ${error}`);
-    }
+  async addItemToList(feirinhaId: string, newItem: IList): Promise<T | null> {
+    return this.model.findByIdAndUpdate(
+      feirinhaId,
+      { $push: { listCart: newItem } },
+      { new: true }
+    );
+  }
+
+  async removeItemFromList(feirinhaId: string, itemId: string): Promise<T | null> {
+    return this.model.findByIdAndUpdate(
+      feirinhaId,
+      { $pull: { listCart: { _id: itemId } } },
+      { new: true }
+    );
+  }
+
+  async updateItemInList(feirinhaId: string, itemId: string, updatedItem: Partial<IList>):
+  Promise<T | null> {
+    return this.model.findByIdAndUpdate(
+      feirinhaId,
+      { $set: { 'listCart.$[item]': updatedItem } },
+      { new: true, arrayFilters: [{ 'item._id': itemId }] }
+    );
   }
 
   async delete(id: string): Promise<T | null> {
