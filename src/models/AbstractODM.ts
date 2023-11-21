@@ -58,14 +58,24 @@ abstract class AbstractODM<T> {
     );
   }
 
-  async updateItemInList(feirinhaId: string, itemId: string, updatedItem: Partial<IList>):
+  async updateItemInList(feirinhaId: string, itemId: string, updatedItem: Partial<T>):
   Promise<T | null> {
-    return this.model.findByIdAndUpdate(
-      feirinhaId,
-      { $set: { 'listCart.$[item]': updatedItem } },
-      { new: true, arrayFilters: [{ 'item._id': itemId }] }
+    const updateObj: Record<string, any> = {};
+    
+    // Construir o objeto de atualização apenas com as chaves fornecidas
+    for (const key in updatedItem) {
+      if (Object.prototype.hasOwnProperty.call(updatedItem, key)) {
+        updateObj[`listCart.$.${key}`] = updatedItem[key];
+      }
+    }
+
+    return this.model.findOneAndUpdate(
+      { _id: feirinhaId, 'listCart._id': itemId },
+      { $set: updateObj },
+      { new: true }
     );
   }
+
 
   async delete(id: string): Promise<T | null> {
     return this.model.findByIdAndDelete(id);

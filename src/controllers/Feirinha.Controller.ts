@@ -134,9 +134,9 @@ export default class FeirinhaController {
       const { feirinhaId, itemId, updatedItem } = req.body;
       const { type, message } = await this.service.updateItemInList(feirinhaId, itemId, updatedItem);
       if (type) {
-        return res.status(200).json(message);
+        return res.status(type).json({ message });
       }
-      return res.status(500).json({ message: 'Erro ao atualizar item na lista' });
+      return res.status(200).json({ message });
     } catch (err: unknown) {
       return res.status(500).json({
         message: 'Erro ao atualizar item na lista',

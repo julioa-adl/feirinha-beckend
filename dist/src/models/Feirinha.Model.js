@@ -21,7 +21,7 @@ exports.default = FeirinhaModel;
 const IListSchema = new mongoose_1.Schema({
     productId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Product', required: true },
     productName: { type: String, required: true },
-    quantity: { type: String, required: true },
-    price: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    price: { type: Number, required: true },
     buyed: { type: Boolean, required: true },
 });

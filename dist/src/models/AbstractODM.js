@@ -33,7 +33,14 @@ class AbstractODM {
         return this.model.findByIdAndUpdate(feirinhaId, { $pull: { listCart: { _id: itemId } } }, { new: true });
     }
     async updateItemInList(feirinhaId, itemId, updatedItem) {
-        return this.model.findByIdAndUpdate(feirinhaId, { $set: { 'listCart.$[item]': updatedItem } }, { new: true, arrayFilters: [{ 'item._id': itemId }] });
+        const updateObj = {};
+        // Construir o objeto de atualização apenas com as chaves fornecidas
+        for (const key in updatedItem) {
+            if (Object.prototype.hasOwnProperty.call(updatedItem, key)) {
+                updateObj[`listCart.$.${key}`] = updatedItem[key];
+            }
+        }
+        return this.model.findOneAndUpdate({ _id: feirinhaId, 'listCart._id': itemId }, { $set: updateObj }, { new: true });
     }
     async delete(id) {
         return this.model.findByIdAndDelete(id);
