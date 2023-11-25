@@ -22,7 +22,7 @@ export default class ProductService {
     const { name, subName, manufacturer, code, category, unitMeasure, size, image } = product;
 
     const existingProd = await this.model.findOne({code: code});
-    if (existingProd) return { type: 409, message: 'Product alredy Register'};
+    if (existingProd && code !== 'nocode') return { type: 409, message: 'Product alredy Register'};
 
     const newProduct = await this.model.create({
       name, subName, manufacturer, category, code, unitMeasure, size, image
