@@ -6,6 +6,7 @@ export default class FeirinhaModel extends AbstractODM<IFeirinha> {
   constructor() {
     const schema = new Schema({
       userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+      title: { type: String, required: true },
       availableToSpend: { type: Number, required: true },
       marketId: { type: Schema.Types.ObjectId, ref: 'Market', required: true },
       listCart: [{ type: IListSchema, required: true }],

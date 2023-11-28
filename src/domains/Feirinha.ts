@@ -2,6 +2,7 @@ import { IFeirinha, IList } from '../interfaces/IFeirinha';
 
 export default class Feirinha {
   protected id?: string;
+  protected title: string;
   protected userId: string;
   protected availableToSpend: number;
   protected marketId: string;
@@ -10,6 +11,7 @@ export default class Feirinha {
 
   constructor(feirinha: IFeirinha) {
     this.id = feirinha.id;
+    this.title = feirinha.title;
     this.userId = feirinha.userId;
     this.availableToSpend = feirinha.availableToSpend;
     this.marketId = feirinha.marketId;
