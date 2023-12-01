@@ -32,7 +32,7 @@ export default class ProductController {
       const product: IProduct = req.body;
       const { type, message } = await this.service.create(product);
       if (type) {
-        return res.status(type).json({ message });
+        return res.status(type).json(message);
       }
       return res.status(201).json({ message });
     } catch(err: unknown) {

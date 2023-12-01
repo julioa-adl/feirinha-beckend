@@ -31,7 +31,7 @@ class ProductController {
             const product = req.body;
             const { type, message } = await this.service.create(product);
             if (type) {
-                return res.status(type).json({ message });
+                return res.status(type).json(message);
             }
             return res.status(201).json({ message });
         }
