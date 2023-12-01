@@ -29,7 +29,7 @@ class ProductService {
         const newProduct = await this.model.create({
             name, subName, manufacturer, category, code, unitMeasure, size, image
         });
-        return { type: null, message: `Product ${newProduct.name}-${newProduct.subName}-${newProduct.size} successfuly registered` };
+        return { type: null, message: newProduct };
     }
     async update(id, obj) {
         return await this.model.update(id, obj);
