@@ -10,7 +10,7 @@ const User_Middleware_1 = __importDefault(require("../middlewares/User.Middlewar
 const feirinhaRouter = (0, express_1.Router)();
 const feirinhaController = new Feirinha_Controller_1.default();
 feirinhaRouter
-    .get('/', User_Middleware_1.default.validAdmin, feirinhaController.getAll)
+    .get('/', Token_Middleware_1.default.validateUserToken, feirinhaController.getAll)
     .get('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.getByUserId)
     .post('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.create)
     .put('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.update)
