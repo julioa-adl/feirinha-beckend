@@ -6,6 +6,7 @@ class Product {
         this.name = product.name;
         this.subName = product.subName;
         this.manufacturer = product.manufacturer;
+        this.unitSelling = product.unitSelling;
         this.category = product.category;
         this.code = product.code;
         this.unitMeasure = product.unitMeasure;

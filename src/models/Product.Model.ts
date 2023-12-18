@@ -8,6 +8,7 @@ export default class ProductModel extends AbstractODM<IProduct> {
       name: { type: String, required: true },
       subName: { type: String },
       manufacturer: { type: String, required: true },
+      unitSelling: { type: String, required: true },
       category: { type: String, required: true },
       code: { type: String, required: true },
       unitMeasure: { type: String },

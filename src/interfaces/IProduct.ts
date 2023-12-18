@@ -3,6 +3,7 @@ export default interface IProduct {
   name: string,
   subName?: string,
   manufacturer: string,
+  unitSelling: string,
   category: string,
   code: string,
   unitMeasure?: string,

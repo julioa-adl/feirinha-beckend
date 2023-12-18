@@ -5,6 +5,7 @@ export default class Product {
   protected name: string;
   protected subName?: string;
   protected manufacturer: string;
+  protected unitSelling: string;
   protected category: string;
   protected code: string;
   protected unitMeasure?: string;
@@ -16,6 +17,7 @@ export default class Product {
     this.name = product.name;
     this.subName = product.subName;
     this.manufacturer = product.manufacturer;
+    this.unitSelling = product.unitSelling;
     this.category = product.category;
     this.code = product.code;
     this.unitMeasure = product.unitMeasure;
