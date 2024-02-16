@@ -9,6 +9,7 @@ const productController = new ProductController();
 
 productRouter
   .get('/', mdwsToken.validateUserToken, productController.getAll)
+  .get('/:id', mdwsToken.validateUserToken, productController.getOneById)
   .post('/',mdwsToken.validateUserToken, mdwsProd.validCreateProd, productController.create)
   .put('/', mdwsToken.validateUserToken, productController.update)
   .delete('/', mdwsUser.validAdmin, productController.delete)

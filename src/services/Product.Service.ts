@@ -11,6 +11,13 @@ export default class ProductService {
     return null;
   }
 
+  public async getOneById(id: string) {
+    const product = await this.model.findById(id);
+    if (!product) return { type: 404, payload: { token: null } };
+
+    return { type: null, payload: product };
+  }
+
   public async getAll() {
     const allProducts = await this.model.findAll();
     if (!allProducts) return { type: 404, payload: { token: null } };

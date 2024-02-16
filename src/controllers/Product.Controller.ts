@@ -8,10 +8,26 @@ export default class ProductController {
   constructor() {
     this.service = new ProductService();
     this.getAll = this.getAll.bind(this);
+    this.getOneById = this.getOneById.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
   }
+
+  public async getOneById(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const { type, payload } = await this.service.getOneById(id);
+      if (type) {
+        return res.status(404).json({ message: 'Product not found' }); 
+      } 
+      return res.status(200).json(payload);
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'Erro ao buscar produto no banco', error: String(err),
+      });
+    }
+  } 
 
   public async getAll(_req: Request, res: Response) {
     try {

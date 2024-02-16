@@ -15,6 +15,12 @@ class ProductService {
         }
         return null;
     }
+    async getOneById(id) {
+        const product = await this.model.findById(id);
+        if (!product)
+            return { type: 404, payload: { token: null } };
+        return { type: null, payload: product };
+    }
     async getAll() {
         const allProducts = await this.model.findAll();
         if (!allProducts)

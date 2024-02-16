@@ -8,9 +8,25 @@ class ProductController {
     constructor() {
         this.service = new Product_Service_1.default();
         this.getAll = this.getAll.bind(this);
+        this.getOneById = this.getOneById.bind(this);
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+    }
+    async getOneById(req, res) {
+        const { id } = req.params;
+        try {
+            const { type, payload } = await this.service.getOneById(id);
+            if (type) {
+                return res.status(404).json({ message: 'Product not found' });
+            }
+            return res.status(200).json(payload);
+        }
+        catch (err) {
+            return res.status(500).json({
+                message: 'Erro ao buscar produto no banco', error: String(err),
+            });
+        }
     }
     async getAll(_req, res) {
         try {

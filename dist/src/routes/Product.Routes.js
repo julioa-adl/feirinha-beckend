@@ -12,6 +12,7 @@ const productRouter = (0, express_1.Router)();
 const productController = new Product_Controller_1.default();
 productRouter
     .get('/', Token_Middleware_1.default.validateUserToken, productController.getAll)
+    .get('/:id', Token_Middleware_1.default.validateUserToken, productController.getOneById)
     .post('/', Token_Middleware_1.default.validateUserToken, Product_Middleware_1.default.validCreateProd, productController.create)
     .put('/', Token_Middleware_1.default.validateUserToken, productController.update)
     .delete('/', User_Middleware_1.default.validAdmin, productController.delete);
