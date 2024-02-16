@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_Service_1 = __importDefault(require("../services/User.Service"));
+const EmailVerification_Service_1 = __importDefault(require("../services/EmailVerification.Service"));
 class UserController {
     constructor() {
         this.service = new User_Service_1.default();
+        this.verificationCodeService = new EmailVerification_Service_1.default();
         this.getUsers = this.getUsers.bind(this);
         this.getUserById = this.getUserById.bind(this);
         this.create = this.create.bind(this);
@@ -48,12 +50,20 @@ class UserController {
         }
     }
     async create(req, res) {
+        const { name, email, password, role, verificationCode } = req.body;
         try {
-            const user = req.body;
-            const { type, payload: { token } } = await this.service.create(user);
-            if (type) {
+            const existingEmail = await this.service.getByEmail(email);
+            if (existingEmail) {
                 return res.status(409).json({ message: 'User already registered' });
             }
+            const emailVerificationToken = await this.verificationCodeService.findOne(email, verificationCode);
+            if (!emailVerificationToken) {
+                return res.status(400).json({ message: 'Verification code incorrect or expired.' });
+            }
+            else {
+                await this.verificationCodeService.deleteOne(email, verificationCode);
+            }
+            const { payload: { token } } = await this.service.create({ name, email, password, role });
             return res.status(201).json({ token });
         }
         catch (err) {

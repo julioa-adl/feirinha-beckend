@@ -1,5 +1,6 @@
 import { model, Model, models, Schema } from 'mongoose';
 import { IList } from '../interfaces/IFeirinha';
+import { DeleteResult } from 'mongodb';
 
 abstract class AbstractODM<T> {
   protected model: Model<T>;
@@ -76,6 +77,9 @@ abstract class AbstractODM<T> {
     );
   }
 
+  async deleteOne(conditions: Partial<T>): Promise<DeleteResult> {
+    return this.model.deleteOne(conditions);
+  }
 
   async delete(id: string): Promise<T | null> {
     return this.model.findByIdAndDelete(id);

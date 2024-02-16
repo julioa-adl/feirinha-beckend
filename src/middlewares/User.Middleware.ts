@@ -19,8 +19,8 @@ const validateUser = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 const validateRegister = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password, birthday, role } = req.body;
-  if (!name || !email || !password || !birthday || !role) {
+  const { name, email, password, role } = req.body;
+  if (!name || !email || !password || !role) {
     return res.status(400).json({ error: 'Faltam informações' }); 
   }
   if (role !== 'User') {
