@@ -3,12 +3,15 @@ import { Request, Response } from 'express';
 import IUser from '../interfaces/IUser';
 import ILogin from '../interfaces/ILogin';
 import UserService from '../services/User.Service';
+import EmailVerificationService from '../services/EmailVerification.Service';
 
 export default class UserController {
   public service: UserService;
+  public verificationCodeService: EmailVerificationService;
 
   constructor() {
     this.service = new UserService();
+    this.verificationCodeService = new EmailVerificationService();
     this.getUsers = this.getUsers.bind(this);
     this.getUserById = this.getUserById.bind(this);
     this.create = this.create.bind(this);
@@ -51,12 +54,22 @@ export default class UserController {
   }
 
   public async create(req: Request, res: Response) {
+    const { name, email, password, role, verificationCode } = req.body;
     try {
-      const user: IUser = req.body;
-      const { type, payload: { token } } = await this.service.create(user);
-      if (type) {
-        return res.status(409).json({ message: 'User already registered' }); 
-      } 
+      const existingEmail = await this.service.getByEmail(email)
+        if (existingEmail) {
+            return res.status(409).json({ message: 'User already registered' }); 
+        }
+
+      const emailVerificationToken = await this.verificationCodeService.findOne( email, verificationCode );
+      if (!emailVerificationToken) {
+          return res.status(400).json({ message: 'Verification code incorrect or expired.' });
+      } else {
+          await this.verificationCodeService.deleteOne( email, verificationCode );
+      }
+
+      const { payload: { token } } = await this.service.create({ name, email, password, role });
+      
       return res.status(201).json({ token });
     } catch(err: unknown) {
       return res.status(500).json({

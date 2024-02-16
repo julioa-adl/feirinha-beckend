@@ -6,7 +6,6 @@ class User {
         this.name = user.name;
         this.email = user.email;
         this.password = user.password;
-        this.birthday = user.birthday;
         this.role = user.role;
     }
 }

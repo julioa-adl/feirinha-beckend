@@ -42,6 +42,9 @@ class AbstractODM {
         }
         return this.model.findOneAndUpdate({ _id: feirinhaId, 'listCart._id': itemId }, { $set: updateObj }, { new: true });
     }
+    async deleteOne(conditions) {
+        return this.model.deleteOne(conditions);
+    }
     async delete(id) {
         return this.model.findByIdAndDelete(id);
     }

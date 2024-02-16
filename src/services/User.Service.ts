@@ -19,6 +19,11 @@ export default class UserService {
     return user;
   }
 
+  public async getByEmail(email: string) {
+    const user = await this.model.findOne({ email });
+    return user;
+  }
+
   public async getUsers() {
     const allUsers = await this.model.findAll();
     if (!allUsers) return { type: 404, payload: { token: null } };
@@ -32,33 +37,13 @@ export default class UserService {
     return { type: null, payload: listUsers };
   }
   
-  public async firstUser() {
-    const superUser: IUser = {
-      name: process.env.USER_SUPER_NAME || 'Super',
-      email: process.env.USER_SUPER_EMAIL || 'super@example.com',
-      password: process.env.USER_SUPER_PASS || 'super_pass',
-      birthday: process.env.USER_SUPER_BTHD || '00-00-0000',
-      role: process.env.USER_SUPER_ROLE || 'Super',
-    }
-    const salt = bcrypt.genSaltSync(10);
-    const validPwd = bcrypt.hashSync(superUser.password, salt);
-    const allUsers = await this.model.findAll();
-    if (allUsers.length === 0) {
-      const { name, email, password, birthday, role } = superUser;
-      await this.model.create({ name, email, password: validPwd, birthday, role });
-    }
-  }
 
   public async create(user: IUser) {
-    await this.firstUser()
-    const { name, email, password, birthday, role } = user;
-
-    const existingUser = await this.model.findOne({email: email});
-    if (existingUser) return { type: 409, payload: { token: null } };
+    const { name, email, password, role } = user;
 
     const salt = bcrypt.genSaltSync(10);
     const validPwd = bcrypt.hashSync(password, salt);
-    const newUser = await this.model.create({ name, email, password: validPwd, birthday, role });
+    const newUser = await this.model.create({ name, email, password: validPwd, role });
 
     newUser.password = '';
 

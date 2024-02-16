@@ -17,8 +17,8 @@ const validateUser = async (req, res, next) => {
     return res.status(401).json({ error: 'Permission Danied - No Changes' });
 };
 const validateRegister = async (req, res, next) => {
-    const { name, email, password, birthday, role } = req.body;
-    if (!name || !email || !password || !birthday || !role) {
+    const { name, email, password, role } = req.body;
+    if (!name || !email || !password || !role) {
         return res.status(400).json({ error: 'Faltam informações' });
     }
     if (role !== 'User') {

@@ -11,6 +11,7 @@ const Product_Routes_1 = __importDefault(require("./routes/Product.Routes"));
 const Feirinha_Routes_1 = __importDefault(require("./routes/Feirinha.Routes"));
 const ItensCart_Routes_1 = __importDefault(require("./routes/ItensCart.Routes"));
 const Recommendation_Routes_1 = __importDefault(require("./routes/Recommendation.Routes"));
+const VerificationCode_Routes_1 = __importDefault(require("./routes/VerificationCode.Routes"));
 const Default_Routes_1 = __importDefault(require("./routes/Default.Routes"));
 const cors_1 = __importDefault(require("cors"));
 const corsOptions = {
@@ -29,4 +30,5 @@ app.use('/product', Product_Routes_1.default);
 app.use('/feirinha', Feirinha_Routes_1.default);
 app.use('/cart', ItensCart_Routes_1.default);
 app.use('/recommendation', Recommendation_Routes_1.default);
+app.use('/verificationCode', VerificationCode_Routes_1.default);
 exports.default = app;
