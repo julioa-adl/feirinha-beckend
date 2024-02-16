@@ -8,6 +8,7 @@ const AbstractODM_1 = __importDefault(require("./AbstractODM"));
 class ProductModel extends AbstractODM_1.default {
     constructor() {
         const schema = new mongoose_1.Schema({
+            lastChange: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
             name: { type: String, required: true },
             subName: { type: String },
             manufacturer: { type: String, required: true },
