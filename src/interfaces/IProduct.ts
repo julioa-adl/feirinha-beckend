@@ -9,4 +9,5 @@ export default interface IProduct {
   unitMeasure?: string,
   size?: number,
   image?: string,
+  lastChange: string,
 }

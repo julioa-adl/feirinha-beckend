@@ -11,6 +11,7 @@ export default class Product {
   protected unitMeasure?: string;
   protected size?: number;
   protected image?: string;
+  protected lastChange: string;
 
   constructor(product: IProduct) {
     this.id = product.id;
@@ -23,5 +24,6 @@ export default class Product {
     this.unitMeasure = product.unitMeasure;
     this.size = product.size;
     this.image = product.image;
+    this.lastChange = product.lastChange;
   }
 }

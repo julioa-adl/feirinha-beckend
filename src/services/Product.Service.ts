@@ -27,13 +27,13 @@ export default class ProductService {
 
   public async create(product: IProduct) {
     const { name, subName, manufacturer, unitSelling,
-            code, category, unitMeasure, size, image } = product;
+            code, category, unitMeasure, size, image, lastChange } = product;
 
     const existingProd = await this.model.findOne({code: code});
     if (existingProd && code !== 'nocode') return { type: 409, message: 'Product alredy Register'};
 
     const newProduct = await this.model.create({
-      name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image
+      name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image, lastChange
     });
     return { type: null, message: newProduct};
   }

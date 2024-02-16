@@ -12,6 +12,7 @@ class Product {
         this.unitMeasure = product.unitMeasure;
         this.size = product.size;
         this.image = product.image;
+        this.lastChange = product.lastChange;
     }
 }
 exports.default = Product;
