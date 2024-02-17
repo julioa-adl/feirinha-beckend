@@ -22,10 +22,10 @@ class MarketService {
         return { type: null, payload: allMarket };
     }
     async getOneById(id) {
-        const product = await this.model.findById(id);
-        if (!product)
-            return { type: 404, payload: { token: null } };
-        return { type: null, payload: product };
+        const market = await this.model.findById(id);
+        if (!market)
+            return { type: 404, payload: null };
+        return { type: null, payload: market };
     }
     async create(market) {
         const { name, address, neighborhood, city, state } = market;

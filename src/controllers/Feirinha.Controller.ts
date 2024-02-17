@@ -2,13 +2,17 @@
 /* eslint-disable max-lines */
 import { Request, Response } from 'express';
 import { IFeirinha } from '../interfaces/IFeirinha';
+import IMarket from '../interfaces/IMarket';
+import MarketService from '../services/Market.Service';
 import FeirinhaService from '../services/Feirinha.Service';
 
 export default class FeirinhaController {
   public service: FeirinhaService;
+  public Mrktservice: MarketService;
 
   constructor() {
     this.service = new FeirinhaService();
+    this.Mrktservice = new MarketService();
     this.create = this.create.bind(this);
     this.getAll = this.getAll.bind(this);
     this.getByUserId = this.getByUserId.bind(this);
@@ -59,10 +63,26 @@ export default class FeirinhaController {
     const { prodId } = req.params;
     try {
       const { type, message } = await this.service.getAllByProductId(prodId);
-      if (!type) return res.status(200).json( message );
-    } catch(err: unknown) {
+
+      if (!type) {
+        // Percorre todas as compras retornadas
+        for (const compra of message) {
+          // Busca os dados do mercado pelo ID
+          const { payload } = await this.Mrktservice.getOneById(compra.marketId);
+
+          if (payload) {
+            // Adiciona os dados do mercado às informações de compra
+            compra.marketName = payload.name;
+            compra.marketNeighborhood = payload.neighborhood;
+            compra.marketState = payload.state;
+          }
+        }
+
+        return res.status(200).json(message);
+      }
+    } catch (err: unknown) {
       return res.status(500).json({
-        message: 'erro ao buscar no banco',
+        message: 'Erro ao buscar no banco',
         error: String(err),
       });
     }

@@ -19,10 +19,10 @@ export default class MarketService {
   }
 
   public async getOneById(id: string) {
-    const product = await this.model.findById(id);
-    if (!product) return { type: 404, payload: { token: null } };
+    const market = await this.model.findById(id);
+    if (!market) return { type: 404, payload: null };
 
-    return { type: null, payload: product };
+    return { type: null, payload: market };
   }
 
   public async create(market: IMarket) {

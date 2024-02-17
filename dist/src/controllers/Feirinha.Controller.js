@@ -3,10 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Market_Service_1 = __importDefault(require("../services/Market.Service"));
 const Feirinha_Service_1 = __importDefault(require("../services/Feirinha.Service"));
 class FeirinhaController {
     constructor() {
         this.service = new Feirinha_Service_1.default();
+        this.Mrktservice = new Market_Service_1.default();
         this.create = this.create.bind(this);
         this.getAll = this.getAll.bind(this);
         this.getByUserId = this.getByUserId.bind(this);
@@ -56,12 +58,24 @@ class FeirinhaController {
         const { prodId } = req.params;
         try {
             const { type, message } = await this.service.getAllByProductId(prodId);
-            if (!type)
+            if (!type) {
+                // Percorre todas as compras retornadas
+                for (const compra of message) {
+                    // Busca os dados do mercado pelo ID
+                    const { payload } = await this.Mrktservice.getOneById(compra.marketId);
+                    if (payload) {
+                        // Adiciona os dados do mercado às informações de compra
+                        compra.marketName = payload.name;
+                        compra.marketNeighborhood = payload.neighborhood;
+                        compra.marketState = payload.state;
+                    }
+                }
                 return res.status(200).json(message);
+            }
         }
         catch (err) {
             return res.status(500).json({
-                message: 'erro ao buscar no banco',
+                message: 'Erro ao buscar no banco',
                 error: String(err),
             });
         }
