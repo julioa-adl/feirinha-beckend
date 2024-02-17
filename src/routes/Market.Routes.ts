@@ -9,6 +9,7 @@ const marketController = new MarketController();
 
 marketRouter
   .get('/', mdwsToken.validateUserToken, marketController.getAll)
+  .get('/:id', mdwsToken.validateUserToken, marketController.getOneById)
   .post('/', mdwsToken.validateUserToken, mktMiddleware.validCreateMarket, marketController.create)
   .put('/', mdwsToken.validateUserToken, marketController.update)
   .delete('/',mdws.validAdmin, marketController.delete);

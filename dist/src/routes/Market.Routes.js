@@ -12,6 +12,7 @@ const marketRouter = (0, express_1.Router)();
 const marketController = new Market_Controller_1.default();
 marketRouter
     .get('/', Token_Middleware_1.default.validateUserToken, marketController.getAll)
+    .get('/:id', Token_Middleware_1.default.validateUserToken, marketController.getOneById)
     .post('/', Token_Middleware_1.default.validateUserToken, Market_Middleware_1.default.validCreateMarket, marketController.create)
     .put('/', Token_Middleware_1.default.validateUserToken, marketController.update)
     .delete('/', User_Middleware_1.default.validAdmin, marketController.delete);

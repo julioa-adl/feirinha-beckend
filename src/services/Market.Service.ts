@@ -18,6 +18,13 @@ export default class MarketService {
     return { type: null, payload: allMarket };
   }
 
+  public async getOneById(id: string) {
+    const product = await this.model.findById(id);
+    if (!product) return { type: 404, payload: { token: null } };
+
+    return { type: null, payload: product };
+  }
+
   public async create(market: IMarket) {
     const { name, address, neighborhood, city, state } = market;
 
