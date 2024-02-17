@@ -12,6 +12,7 @@ const feirinhaController = new Feirinha_Controller_1.default();
 feirinhaRouter
     .get('/', Token_Middleware_1.default.validateUserToken, feirinhaController.getAll)
     .get('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.getByUserId)
+    .get('/statistic/:prodId', Token_Middleware_1.default.validateUserToken, feirinhaController.getAllByProductId)
     .post('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.create)
     .put('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.update)
     .delete('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, feirinhaController.delete);

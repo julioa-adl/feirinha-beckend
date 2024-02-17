@@ -23,6 +23,35 @@ export default class FeirinhaService {
     return { type: 404, message: 'nenhuma feirinha encontrada' };
   }
 
+  public async getAllByProductId(prodId: string) {
+    try {
+      const allFeirinhas = await this.model.findAll();
+      if (!allFeirinhas) return { type: 404, message: 'nenhuma feirinha encontrada' };
+
+      const promises = allFeirinhas.map(async (feirinha) => {
+        const purchases: any[] = [];
+        feirinha.listCart.forEach((item) => {
+          if (item.productId == prodId && item.buyed) {
+
+            purchases.push({
+              marketId: feirinha.marketId,
+              price: item.price,
+              date: feirinha.date,
+            });
+          }
+        });
+        return purchases;
+      });
+
+      const results = await Promise.all(promises);
+      const flattenedPurchases = results.flat();
+
+      return { type: null, message: flattenedPurchases };
+    } catch (error) {
+      return { type: 500, message: 'Erro ao buscar compras por ID do produto' };
+    }
+  }
+
   public async getAll() {
     const search = await this.model.findAll();
     if (search) return { type: null, message: search };

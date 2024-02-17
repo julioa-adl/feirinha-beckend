@@ -12,6 +12,7 @@ export default class FeirinhaController {
     this.create = this.create.bind(this);
     this.getAll = this.getAll.bind(this);
     this.getByUserId = this.getByUserId.bind(this);
+    this.getAllByProductId = this.getAllByProductId.bind(this);
     this.default = this.default.bind(this);
     this.delete = this.delete.bind(this);
     this.update = this.update.bind(this);
@@ -45,6 +46,19 @@ export default class FeirinhaController {
     const { userId } = req.params;
     try {
       const { type, message } = await this.service.getByUserId(userId);
+      if (!type) return res.status(200).json( message );
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'erro ao buscar no banco',
+        error: String(err),
+      });
+    }
+  }
+
+  public async getAllByProductId(req: Request, res: Response) {
+    const { prodId } = req.params;
+    try {
+      const { type, message } = await this.service.getAllByProductId(prodId);
       if (!type) return res.status(200).json( message );
     } catch(err: unknown) {
       return res.status(500).json({
