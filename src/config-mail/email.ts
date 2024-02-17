@@ -15,6 +15,16 @@ export async function sendVerificationCode(toEmail: string, verificationCode: st
         from: "Feirinha da Gente <noreply@feirinhadagente.com>",
         to: toEmail,
         subject: "Your verification code",
-        html: `<p>This is your verification code. It will expire in 10 minutes.</p><strong>${verificationCode}</strong>`
+        html: `
+        <div>
+            <h2>Olá! Seja bem vindo ao Feirinha da Gente <3</h2>
+            <p>Este é seu código de verificação de Email <br/>
+            copie e cole na página de cadastro para realizar a validação! <br/>
+            Este código irá expirar em 10 min!</p>
+            <strong>${verificationCode}</strong>
+            <p>Em caso de dúvidas, basta responder este Email.
+            Obrigado!</p>
+        </div>
+        `
     });
 }
