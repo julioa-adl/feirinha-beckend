@@ -22,9 +22,9 @@ class RecommendationService {
         return { type: null, payload: allRecommendations };
     }
     async create(recommendation) {
-        const { userId, productId, rating, comment, date } = recommendation;
+        const { userId, productId, rating, comment, date, userName } = recommendation;
         const newRecommendation = await this.model.create({
-            userId, productId, rating, comment, date
+            userId, productId, rating, comment, date, userName
         });
         return { type: null, message: `Recommendation ${newRecommendation.id} successfuly registered` };
     }

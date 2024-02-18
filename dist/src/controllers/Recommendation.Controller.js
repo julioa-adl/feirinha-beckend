@@ -26,9 +26,11 @@ class RecommendationController {
         }
     }
     async create(req, res) {
+        const recommendation = req.body;
+        if (recommendation.rating > 5 || recommendation.rating < 0)
+            return res.status(400).json({ message: 'avaliação deve ser entre 0 e 5' });
         try {
-            const product = req.body;
-            const { type, message } = await this.service.create(product);
+            const { type, message } = await this.service.create(recommendation);
             if (type) {
                 return res.status(type).json({ message });
             }

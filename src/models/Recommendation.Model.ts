@@ -6,6 +6,7 @@ export default class RecommendationModel extends AbstractODM<IRecommendation> {
     constructor() {
         const schema = new Schema({
             userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+            userName: { type: String, required: true },
             productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
             rating: { type: Number, required: true },
             comment: { type: String, required: true },

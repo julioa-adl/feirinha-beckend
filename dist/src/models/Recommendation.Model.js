@@ -9,6 +9,7 @@ class RecommendationModel extends AbstractODM_1.default {
     constructor() {
         const schema = new mongoose_1.Schema({
             userId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
+            userName: { type: String, required: true },
             productId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Product', required: true },
             rating: { type: Number, required: true },
             comment: { type: String, required: true },

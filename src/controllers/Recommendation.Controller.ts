@@ -27,9 +27,10 @@ export default class RecommendationController {
     }
 
     public async create(req: Request, res: Response) {
+      const recommendation: IRecommendation = req.body;
+      if (recommendation.rating > 5 || recommendation.rating < 0) return res.status(400).json({ message: 'avaliação deve ser entre 0 e 5' });
         try {
-          const product: IRecommendation = req.body;
-          const { type, message } = await this.service.create(product);
+          const { type, message } = await this.service.create(recommendation);
           if (type) {
             return res.status(type).json({ message });
           }

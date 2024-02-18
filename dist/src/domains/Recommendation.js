@@ -4,6 +4,7 @@ class Recommendation {
     constructor(recommendation) {
         this.id = recommendation.id;
         this.userId = recommendation.userId;
+        this.userName = recommendation.userName;
         this.productId = recommendation.productId;
         this.rating = recommendation.rating;
         this.comment = recommendation.comment;
