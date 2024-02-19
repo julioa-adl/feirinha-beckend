@@ -10,7 +10,7 @@ const User_Middleware_1 = __importDefault(require("../middlewares/User.Middlewar
 const recommendationRouter = (0, express_1.Router)();
 const recommendationController = new Recommendation_Controller_1.default();
 recommendationRouter
-    .get('/', Token_Middleware_1.default.validateUserToken, recommendationController.getAll)
+    .get('/:productId', Token_Middleware_1.default.validateUserToken, recommendationController.getByProductId)
     .post('/', Token_Middleware_1.default.validateUserToken, recommendationController.create)
     .delete('/:userId', Token_Middleware_1.default.validateUserToken, User_Middleware_1.default.validateUser, recommendationController.delete);
 exports.default = recommendationRouter;

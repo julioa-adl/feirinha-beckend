@@ -7,7 +7,7 @@ const recommendationRouter = Router();
 const recommendationController = new RecommendationController();
 
 recommendationRouter
-  .get('/', mdwsToken.validateUserToken, recommendationController.getAll)
+  .get('/:productId', mdwsToken.validateUserToken, recommendationController.getByProductId)
   .post('/', mdwsToken.validateUserToken, recommendationController.create)
   .delete('/:userId', mdwsToken.validateUserToken, mdwsUser.validateUser,
           recommendationController.delete)

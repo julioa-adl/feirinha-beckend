@@ -25,6 +25,10 @@ abstract class AbstractODM<T> {
     return this.model.find();
   }
 
+  async find(conditions: Partial<T>): Promise<T[]> {
+    return this.model.find(conditions);
+  }
+
   async findById(id: string): Promise<T | null> {
     return this.model.findById(id);
   }

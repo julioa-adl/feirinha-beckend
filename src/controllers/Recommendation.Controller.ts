@@ -7,14 +7,15 @@ export default class RecommendationController {
 
     constructor() {
         this.service = new RecommendationService();
-        this.getAll = this.getAll.bind(this);
+        this.getByProductId = this.getByProductId.bind(this);
         this.create = this.create.bind(this);
         this.delete = this.delete.bind(this);
     }
     
-    public async getAll(_req: Request, res: Response) {
+    public async getByProductId(req: Request, res: Response) {
+    const { productId } = req.params;
     try {
-            const { type, payload } = await this.service.getAll();
+            const { type, payload } = await this.service.getByProductId(productId);
             if (type) {
             return res.status(404).json({ message: 'No Recommendations Returned' }); 
         } 

@@ -12,8 +12,8 @@ export default class RecommendationService {
         return null;
     }
 
-    public async getAll() {
-        const allRecommendations = await this.model.findAll();
+    public async getByProductId(productId: string) {
+        const allRecommendations = await this.model.find({productId});
         if (!allRecommendations) return { type: 404, payload: { token: null } };
     
         return { type: null, payload: allRecommendations };

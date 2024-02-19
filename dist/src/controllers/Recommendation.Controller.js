@@ -7,13 +7,14 @@ const Recommendation_Service_1 = __importDefault(require("../services/Recommenda
 class RecommendationController {
     constructor() {
         this.service = new Recommendation_Service_1.default();
-        this.getAll = this.getAll.bind(this);
+        this.getByProductId = this.getByProductId.bind(this);
         this.create = this.create.bind(this);
         this.delete = this.delete.bind(this);
     }
-    async getAll(_req, res) {
+    async getByProductId(req, res) {
+        const { productId } = req.params;
         try {
-            const { type, payload } = await this.service.getAll();
+            const { type, payload } = await this.service.getByProductId(productId);
             if (type) {
                 return res.status(404).json({ message: 'No Recommendations Returned' });
             }

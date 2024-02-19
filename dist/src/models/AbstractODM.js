@@ -16,6 +16,9 @@ class AbstractODM {
     async findAll() {
         return this.model.find();
     }
+    async find(conditions) {
+        return this.model.find(conditions);
+    }
     async findById(id) {
         return this.model.findById(id);
     }
