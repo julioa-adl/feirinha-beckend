@@ -6,6 +6,7 @@ export default class ProductModel extends AbstractODM<IProduct> {
   constructor() {
     const schema = new Schema({
       lastChange: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+      lastChangeName: { type: String, required: true },
       name: { type: String, required: true },
       subName: { type: String },
       manufacturer: { type: String, required: true },

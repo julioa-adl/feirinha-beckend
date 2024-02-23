@@ -10,4 +10,5 @@ export default interface IProduct {
   size?: number,
   image?: string,
   lastChange: string,
+  lastChangeName: string,
 }

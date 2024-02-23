@@ -13,6 +13,7 @@ class Product {
         this.size = product.size;
         this.image = product.image;
         this.lastChange = product.lastChange;
+        this.lastChangeName = product.lastChangeName;
     }
 }
 exports.default = Product;
