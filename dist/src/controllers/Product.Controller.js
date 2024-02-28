@@ -38,46 +38,7 @@ class ProductController {
             if (type) {
                 return res.status(404).json({ message: 'No Products Returned' });
             }
-            let allProducts; // Alterado para any[] para incluir a propriedade 'media'
-            if (Array.isArray(payload)) {
-                const mediaPromises = payload.map(async (p) => {
-                    const id = p._doc._id.toString();
-                    const { type: ftype, message: fmessage } = await this.feirinhaService.getAllByProductId(id);
-                    if (!ftype) {
-                        if (Array.isArray(fmessage)) {
-                            const media = fmessage.reduce((acc, cur) => acc + Number(cur.price), 0) / fmessage.length;
-                            if (media) {
-                                return media;
-                            }
-                            return 0;
-                        }
-                    }
-                });
-                const ratingPromises = payload.map(async (p) => {
-                    const id = p._doc._id.toString();
-                    const { type: rtype, payload: rpayload } = await this.recommendationService.getByProductId(id);
-                    if (!rtype) {
-                        if (Array.isArray(rpayload)) {
-                            const media = rpayload.reduce((acc, cur) => acc + Number(cur.rating), 0) / rpayload.length;
-                            if (media) {
-                                return media;
-                            }
-                            return 0;
-                        }
-                    }
-                });
-                const mediaResults = await Promise.all(mediaPromises);
-                const ratingResults = await Promise.all(ratingPromises);
-                allProducts = payload.map((p, index) => ({
-                    ...p._doc,
-                    media: mediaResults[index],
-                    rating: ratingResults[index],
-                }));
-            }
-            else {
-                allProducts = []; // or whatever default value you want
-            }
-            return res.status(200).json(allProducts);
+            return res.status(200).json(payload);
         }
         catch (err) {
             return res.status(500).json({
