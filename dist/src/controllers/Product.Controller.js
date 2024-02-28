@@ -4,9 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Product_Service_1 = __importDefault(require("../services/Product.Service"));
+const Feirinha_Service_1 = __importDefault(require("../services/Feirinha.Service"));
+const Recommendation_Service_1 = __importDefault(require("../services/Recommendation.Service"));
 class ProductController {
     constructor() {
         this.service = new Product_Service_1.default();
+        this.feirinhaService = new Feirinha_Service_1.default();
+        this.recommendationService = new Recommendation_Service_1.default();
         this.getAll = this.getAll.bind(this);
         this.getOneById = this.getOneById.bind(this);
         this.create = this.create.bind(this);
@@ -34,7 +38,46 @@ class ProductController {
             if (type) {
                 return res.status(404).json({ message: 'No Products Returned' });
             }
-            return res.status(200).json(payload);
+            let allProducts; // Alterado para any[] para incluir a propriedade 'media'
+            if (Array.isArray(payload)) {
+                const mediaPromises = payload.map(async (p) => {
+                    const id = p._doc._id.toString();
+                    const { type: ftype, message: fmessage } = await this.feirinhaService.getAllByProductId(id);
+                    if (!ftype) {
+                        if (Array.isArray(fmessage)) {
+                            const media = fmessage.reduce((acc, cur) => acc + Number(cur.price), 0) / fmessage.length;
+                            if (media) {
+                                return media;
+                            }
+                            return 0;
+                        }
+                    }
+                });
+                const ratingPromises = payload.map(async (p) => {
+                    const id = p._doc._id.toString();
+                    const { type: rtype, payload: rpayload } = await this.recommendationService.getByProductId(id);
+                    if (!rtype) {
+                        if (Array.isArray(rpayload)) {
+                            const media = rpayload.reduce((acc, cur) => acc + Number(cur.rating), 0) / rpayload.length;
+                            if (media) {
+                                return media;
+                            }
+                            return 0;
+                        }
+                    }
+                });
+                const mediaResults = await Promise.all(mediaPromises);
+                const ratingResults = await Promise.all(ratingPromises);
+                allProducts = payload.map((p, index) => ({
+                    ...p._doc,
+                    media: mediaResults[index],
+                    rating: ratingResults[index],
+                }));
+            }
+            else {
+                allProducts = []; // or whatever default value you want
+            }
+            return res.status(200).json(allProducts);
         }
         catch (err) {
             return res.status(500).json({
