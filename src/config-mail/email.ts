@@ -22,7 +22,7 @@ export async function sendVerificationCode(toEmail: string, verificationCode: st
                     <p style="font-size: 16px;">Seja bem-vindo ao Feirinha da Gente <3,<br>
                     é um grande prazer ter você por aqui.<br>
                     Para prosseguir com seu cadastro, por favor,<br>
-                    utilize o seguinte código de cofirmação: </p>
+                    utilize o seguinte código de cofirmação:
                    <strong style="font-size: 24px;">${verificationCode}</strong><br>
                     Por favor, insira este código no campo apropriado<br>
                      no nosso site para continuar o processo de cadastro<br>
