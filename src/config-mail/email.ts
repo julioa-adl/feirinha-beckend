@@ -16,9 +16,8 @@ export async function sendVerificationCode(toEmail: string, verificationCode: st
         to: toEmail,
         subject: "Your verification code",
         html: `
-        <div style="margin: 0; padding: 0; background-color: #e1e1ef; height: 100vh;">
-            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; background-color: #e1e1ef;">
+                <div style="margin: auto; background-color: #ffffff; padding: 8px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
                     <h2>Olá! Seja bem-vindo ao Feirinha da Gente <3</h2>
                     <p>Este é seu código de verificação de Email <br>
                     copie e cole na página de cadastro para realizar a validação! <br>
@@ -28,7 +27,6 @@ export async function sendVerificationCode(toEmail: string, verificationCode: st
                     Obrigado!</p>
                 </div>
             </div>
-        </div>
         `
     });
 }
