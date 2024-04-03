@@ -18,11 +18,11 @@ async function sendVerificationCode(toEmail, verificationCode) {
         subject: "Your verification code",
         html: `
             <div style="display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; background-color: #e1e1ef;">
-                <div style="margin: auto; background-color: #ffffff; padding: 16px 8px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
-                    <h1>E aí!</h1>
+                <div style="margin: auto; background-color: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
+                    <h2>Opa, cheguei!</h2>
                     <p>Seja bem-vindo ao Feirinha da Gente <3,<br> é um grande prazer ter você por aqui.</p>
                     <br>
-                    <p>Para prosseguir com seu cadastro, por favor, <br>
+                    <p style="font-size: 16px;">Para prosseguir com seu cadastro, por favor, <br>
                     utilize o seguinte código de cofirmação: </p>
                     <h1><strong>${verificationCode}</strong></h1>
                     <p>Por favor, insira este código no campo apropriado<br>
@@ -30,13 +30,15 @@ async function sendVerificationCode(toEmail, verificationCode) {
                      de sua conta. Este código é válido por 2 dias e deve ser<br>
                      usado imediatamente para garantir a segurança da sua conta.
                      <br>
+                     <br>
                      Se você não solicitou este código, ignore este e-mail.<br>
                      Nenhuma conta será feita em sua nome. Para qualquer dúvida<br>
                      ou necessidade de assistência adicional, entre em contato conosco<br>
                      pelo e-mail feirinhadagente00@gmail.com.
                      <br>
+                     <br>
                      Um abraço,<br>
-                     Equipe Feirinha da Gente.
+                     Equipe Feirinha.
                      </p>
                 </div>
             </div>
