@@ -17,26 +17,26 @@ export async function sendVerificationCode(toEmail: string, verificationCode: st
         subject: "Your verification code",
         html: `
             <div style="display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; background-color: #e1e1ef;">
-                <div style="margin: auto; background-color: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
+                <div style="width: 60%; margin: auto; background-color: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
                     <h2>Opa, cheguei!</h2>
-                    <p style="font-size: 16px;">Seja bem-vindo ao Feirinha da Gente <3,<br>
-                    é um grande prazer ter você por aqui.<br>
-                    Para prosseguir com seu cadastro, por favor,<br>
+                    <p style="font-size: 16px;">Seja bem-vindo ao Feirinha da Gente <3,
+                    é um grande prazer ter você por aqui.
+                    Para prosseguir com seu cadastro, por favor,
                     utilize o seguinte código de cofirmação:
-                   <strong style="font-size: 24px;">${verificationCode}</strong><br>
-                    Por favor, insira este código no campo apropriado<br>
-                     no nosso site para continuar o processo de cadastro<br>
-                     de sua conta. Este código é válido por 10 minutos e deve ser<br>
+                   <strong style="font-size: 24px;">${verificationCode}</strong>
+                    Por favor, insira este código no campo apropriado
+                     no nosso site para continuar o processo de cadastro
+                     de sua conta. Este código é válido por 10 minutos e deve ser
                      usado imediatamente para garantir a segurança da sua conta.
                      <br>
                      <br>
-                     Se você não solicitou este código, ignore este e-mail.<br>
-                     Nenhuma conta será feita em sua nome. Para qualquer dúvida<br>
-                     ou necessidade de assistência adicional, entre em contato conosco<br>
+                     Se você não solicitou este código, ignore este e-mail.
+                     Nenhuma conta será feita em sua nome. Para qualquer dúvida
+                     ou necessidade de assistência adicional, entre em contato conosco
                      pelo e-mail feirinhadagente00@gmail.com.
                      <br>
                      <br>
-                     Um abraço,<br>
+                     Um abraço,
                      Equipe Feirinha.
                     </p>
                 </div>
