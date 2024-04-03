@@ -14,7 +14,7 @@ export async function sendVerificationCode(toEmail: string, verificationCode: st
     await transporter.sendMail({
         from: "Feirinha da Gente <noreply@feirinhadagente.com>",
         to: toEmail,
-        subject: "Your verification code",
+        subject: "Código de Validação",
         html: `
             <div style="display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; background-color: #e1e1ef;">
                 <div style="max-width: 500px; margin: auto; background-color: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
